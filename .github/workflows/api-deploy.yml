@@ -16,8 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: setup dotnet
-        run: echo "Setting up dotnet"
+      - name: Install .NET SDK
+        run: |
+          wget https://download.visualstudio.microsoft.com/download/pr/2fe244f9-eada-42b1-b967-4cf54f87789c/2ed68b4c99a4a74f052f051e25a11b07/dotnet-sdk-9.0.100-linux-x64.tar.gz
+          mkdir -p $HOME/dotnet
+          tar -zxf dotnet-sdk-9.0.100-linux-x64.tar.gz -C $HOME/dotnet
+          export PATH=$PATH:$HOME/dotnet
+          dotnet --version
       - name: install dotnet ef
         run: dotnet tool install -g dotnet-ef --version ${{env.DOTNET_EF_VERSION}}
       - name: dotnet bundle migration
