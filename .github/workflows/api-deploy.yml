@@ -18,14 +18,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: setup dotnet
         run: echo "Setting up dotnet"
-      - name: dotnet build
-        run: dotnet build
-      - name: dotnet publish
-        run: dotnet publish --configuration Release --output ./publish
       - name: install dotnet ef
         run: dotnet tool install -g dotnet-ef --version ${{env.DOTNET_EF_VERSION}}
       - name: dotnet bundle migration
         run: dotnet ef migrations bundle --runtime linux-x64 -p ${{env.PROJECT_FOLDER}}/${{env.PROJECT_NAME}}.csproj -o ${{env.PROJECT_FOLDER}}/myapp/migrate
+      - name: dotnet build
+        run: dotnet build
+      - name: dotnet publish
+        run: dotnet publish --configuration Release --output ./publish
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
