@@ -16,10 +16,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install .NET SDK
+      # - name: Install .NET SDK
+      #   run: |
+      #     wget https://dotnet.microsoft.com/en-us/download/dotnet/9.0
+      #     sudo apt-get install dotnet-sdk-9.0
+      #     dotnet --version
+      - name: Install .NET 9.0 SDK
         run: |
-          wget https://dotnet.microsoft.com/en-us/download/dotnet/9.0
+          # Télécharger la clé GPG pour Microsoft
+          wget https://packages.microsoft.com/keys/microsoft.asc
+          sudo apt-key add microsoft.asc
+
+          # Ajouter le dépôt pour Ubuntu 20.04 (ou version appropriée)
+          echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-10-prod stable main" | sudo tee /etc/apt/sources.list.d/dotnet-dev.list
+
+          # Mettre à jour les informations du dépôt
+          sudo apt-get update
+
+          # Installer .NET 9.0 SDK
           sudo apt-get install dotnet-sdk-9.0
+
+          # Vérifier l'installation du SDK
           dotnet --version
       - name: install dotnet ef
         run: dotnet tool install -g dotnet-ef --version ${{env.DOTNET_EF_VERSION}}
