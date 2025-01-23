@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install .NET SDK
         run: |
-          wget https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-8.0.100-linux-x64
+          wget https://dotnet.microsoft.com/en-us/download/dotnet/9.0
           sudo apt-get install dotnet-sdk-9.0
           dotnet --version
       - name: install dotnet ef
