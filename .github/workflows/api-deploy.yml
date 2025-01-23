@@ -16,19 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # - name: Install .NET SDK
-      #   run: |
-      #     wget https://dotnet.microsoft.com/en-us/download/dotnet/9.0
-      #     sudo apt-get install dotnet-sdk-9.0
-      #     dotnet --version
+
       - name: Install .NET 9.0 SDK
         run: |
           # Télécharger la clé GPG pour Microsoft
           wget https://packages.microsoft.com/keys/microsoft.asc
           sudo apt-key add microsoft.asc
 
-          # Ajouter le dépôt pour Ubuntu 20.04 (ou version appropriée)
-          echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-10-prod stable main" | sudo tee /etc/apt/sources.list.d/dotnet-dev.list
+          # Ajouter le dépôt pour Ubuntu 24.04
+          echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/24.04/prod stable main" | sudo tee /etc/apt/sources.list.d/dotnet-prod.list
 
           # Mettre à jour les informations du dépôt
           sudo apt-get update
@@ -38,14 +34,19 @@ jobs:
 
           # Vérifier l'installation du SDK
           dotnet --version
+
       - name: install dotnet ef
         run: dotnet tool install -g dotnet-ef --version ${{env.DOTNET_EF_VERSION}}
+      
       - name: dotnet bundle migration
         run: dotnet ef migrations bundle --runtime linux-x64 -p ${{env.PROJECT_FOLDER}}/${{env.PROJECT_NAME}}.csproj -o ${{env.PROJECT_FOLDER}}/myapp/migrate
+
       - name: dotnet build
         run: dotnet build
+
       - name: dotnet publish
         run: dotnet publish --configuration Release --output ./publish
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -62,6 +63,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: publish-artifact
+
       - name: Deploy to Azure web app
         uses: azure/webapps-deploy@v2
         with:
