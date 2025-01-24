@@ -51,7 +51,7 @@ jobs:
     needs: build
     env:
       DOTNET_VERSION: "9.x"
-      PROJECT_FOLDER: "RabbitMqProductAPI"
+      PROJECT_FOLDER: "RabbitMqProductAPI.Tests"
     steps:
        - name: Set up .NET Core
          uses: actions/setup-dotnet@v3
@@ -59,7 +59,7 @@ jobs:
           dotnet-version: ${{env.DOTNET_VERSION}}
 
        - name: Run unit tests
-         run: dotnet test
+         run: dotnet test ${{env.PROJECT_FOLDER}}/RabbitMqProductAPI.csproj
 
   deploy:
     runs-on: ubuntu-latest
