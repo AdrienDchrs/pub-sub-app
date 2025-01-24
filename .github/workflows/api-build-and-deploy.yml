@@ -58,8 +58,12 @@ jobs:
          with:
           dotnet-version: ${{env.DOTNET_VERSION}}
 
+       - name: Current directory
+         run: dir
+        
        - name: Run unit tests
-         run: dotnet test ${{env.PROJECT_FOLDER}}/RabbitMqProductAPI.Tests.csproj
+         working-directory: ${{env.PROJECT_FOLDER}}/RabbitMqProductAPI.Tests.csproj
+         run: dotnet test 
 
   deploy:
     runs-on: ubuntu-latest
