@@ -52,13 +52,15 @@ jobs:
     env:
       DOTNET_VERSION: "9.x"
     steps:
+       - uses: actions/checkout@v4
+       
        - name: Set up .NET Core
          uses: actions/setup-dotnet@v3
          with:
           dotnet-version: ${{env.DOTNET_VERSION}}
 
        - name: Run unit tests
-         run: dotnet test
+         run: dotnet test .
 
   deploy:
     runs-on: ubuntu-latest
