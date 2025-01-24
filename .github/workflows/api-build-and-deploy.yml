@@ -58,9 +58,9 @@ jobs:
          with:
           dotnet-version: ${{env.DOTNET_VERSION}}
 
-       - name: Current directory
-         run: dir
-        
+       - name: List directory structure to debug
+         run: ls -R
+
        - name: Run unit tests
          working-directory: ${{env.PROJECT_FOLDER}}/RabbitMqProductAPI.Tests.csproj
          run: dotnet test 
