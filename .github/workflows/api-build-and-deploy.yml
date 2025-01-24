@@ -27,11 +27,9 @@ jobs:
           dotnet-version: ${{env.DOTNET_VERSION}}
 
       - name: Build with dotnet
-        working-directory: ${{env.PROJECT_FOLDER}}
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        working-directory: ${{env.PROJECT_FOLDER}}
         run: dotnet publish -c Release -o myapp
 
       - name: install dotnet ef
@@ -46,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.PROJECT_FOLDER}}/myapp
+          path: ./myapp
 
   test: 
     runs-on: ubuntu-latest
@@ -59,8 +57,7 @@ jobs:
          uses: actions/setup-dotnet@v3
          with:
           dotnet-version: ${{env.DOTNET_VERSION}}
-       - name: Build with dotnet
-         run: dotnet build --configuration Release
+
        - name: Run unit tests
          run: dotnet test
 
