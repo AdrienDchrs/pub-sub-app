@@ -6,7 +6,7 @@ name: Build and deploy API app
 on:
   push:
     branches:
-      - main
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -50,10 +50,10 @@ jobs:
 
   test: 
     runs-on: ubuntu-latest
+    needs: build
     env:
       DOTNET_VERSION: "9.x"
-    needs: build
-
+  
     steps:
        - name: Set up .NET Core
          uses: actions/setup-dotnet@v3
