@@ -59,8 +59,8 @@ jobs:
          uses: actions/setup-dotnet@v3
          with:
           dotnet-version: ${{env.DOTNET_VERSION}}
-       - name: dotnet execute test --project RabbitMqProductAPI
-         run: dotnet test 
+       - name: Run unit tests
+         run: dotnet test RabbitMqProductAPI/RabbitMqProductAPI.csproj
 
   deploy:
     runs-on: ubuntu-latest
